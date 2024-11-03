@@ -97,13 +97,13 @@
                 }
             });
 
-            // 功能 2：按鈕簡單動畫效果
+            // 所有按鈕的簡單動畫效果
             $('.button').hover(
                 function() {
-                    $(this).animate({ padding: '15px 25px' }, 200); // 放大效果
+                    $(this).animate({ padding: '15px 25px', fontSize: '1.1em' }, 200); // 放大效果
                 },
                 function() {
-                    $(this).animate({ padding: '10px 20px' }, 200); // 還原效果
+                    $(this).animate({ padding: '10px 20px', fontSize: '1em' }, 200); // 還原效果
                 }
             );
 
