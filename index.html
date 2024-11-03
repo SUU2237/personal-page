@@ -4,9 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HANGYODON!</title>
-    <h1>來自海底世界的❓❗</h1>
+    <h1 style="text-align: center;">來自海底世界的❓❗</h1>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
+        body {
+            background-color: #c2e0e7;
+            color: #333;
+            font-family: Arial, sans-serif;
+            text-align: center; /* 置中所有文字 */
+            display: flex; /* 使用彈性盒子 */
+            flex-direction: column; /* 垂直排列 */
+            align-items: center; /* 水平置中 */
+            justify-content: center; /* 垂直置中 */
+            min-height: 100vh; /* 至少佔滿整個視窗高度 */
+            margin: 0; /* 移除預設邊距 */
+        }
+
         .modal {
             display: none; /* 初始隱藏 */
             position: fixed; /* 固定位置 */
@@ -17,6 +30,7 @@
             height: 100%;
             background-color: rgba(0, 0, 0, 0.5); /* 半透明背景 */
         }
+
         .modal-content {
             background-color: #fefefe;
             margin: 15% auto; /* 中心對齊 */
@@ -25,6 +39,7 @@
             max-width: 400px;
             border-radius: 5px;
         }
+
         .close {
             color: #aaa;
             float: right;
@@ -38,11 +53,7 @@
             text-decoration: none;
             cursor: pointer;
         }
-        body {
-            background-color: #c2e0e7;
-            color: #333;
-            font-family: Arial, sans-serif;
-        }
+
         .button {
             padding: 10px 20px;
             background-color: #93cad0;
@@ -53,18 +64,25 @@
             outline: none;
             border: none;
             border-radius: 4px;
-            margin-right: 10px;
+            margin: 10px 0; /* 垂直間距 */
             transition: background-color 0.3s; /* 加入背景顏色變化過渡 */
         }
+
         .button:hover {
             background-color: #7cb1b8;
+        }
+
+        img {
+            width: 100%; /* 自適應寬度 */
+            max-width: 1000px; /* 最大寬度 */
+            height: auto; /* 高度自動 */
+            margin: 20px 0; /* 上下邊距 */
         }
     </style>
 </head>
 <body>
     <p>相信不少人都曾看過這隻可愛生物，但你知道他叫什麽嗎？又是什麽生物呢？</p>
-    <img src="https://uc.udn.com.tw/photo/2024/03/14/0/29192883.jpg" alt="我是誰" style="width: 1000px; height: auto;">
-    <br>
+    <img src="https://uc.udn.com.tw/photo/2024/03/14/0/29192883.jpg" alt="我是誰">
     <button id="openModalBtn" class="button">解答&簡介</button>
 
     <!-- 彈出視窗 -->
