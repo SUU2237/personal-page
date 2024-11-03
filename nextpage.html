@@ -1,9 +1,10 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>漢頓小測驗！</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
         body {
             background-color: #c2e0e7;
@@ -16,6 +17,23 @@
         .result {
             margin-top: 20px;
             font-weight: bold;
+            display: none; /* 初始隱藏 */
+        }
+        .button {
+            padding: 10px 20px;
+            background-color: #93cad0;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            outline: none;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: transform 0.2s; /* 加入動畫效果 */
+        }
+        .button:hover {
+            transform: scale(1.05); /* 懸停時放大 */
         }
     </style>
 </head>
@@ -63,9 +81,7 @@
             <input type="radio" name="q5" value="C"> BANDAI
         </div>
 
-        <button type="button" style="padding: 10px 20px; background-color: #93cad0; color: white; 
-            text-align: center; text-decoration: none; display: inline-block;outline: none; border:none; border-radius: 4px;" 
-            onclick="calculateScore()">提交測驗</button>
+        <button type="button" class="button" id="submitBtn">提交測驗</button>
     </form>
 
     <div class="result" id="result"></div>
@@ -80,22 +96,41 @@
             q5: 'B'
         };
 
-        function calculateScore() {
-            let score = 0;
-            const form = document.getElementById('quizForm');
-            const formData = new FormData(form);
+        $(document).ready(function() {
+            $('#submitBtn').click(function() {
+                // 驗證所有問題是否都已選擇
+                let allAnswered = true;
+                $('input[type="radio"]').each(function() {
+                    const name = $(this).attr('name');
+                    if (!$(`input[name="${name}"]:checked`).length) {
+                        allAnswered = false;
+                        return false; // 退出 each 循環
+                    }
+                });
 
-            // 遍歷每個問題，計算正確答案
-            for (let [question, answer] of Object.entries(answers)) {
-                if (formData.get(question) === answer) {
-                    score++;
+                if (!allAnswered) {
+                    alert('請回答所有問題！');
+                    return;
                 }
-            }
 
-            // 顯示結果
-            const resultDiv = document.getElementById('result');
-            resultDiv.textContent = `你答對了 ${score} 題！`;
-        }
+                let score = 0;
+                const form = $('#quizForm')[0];
+                const formData = new FormData(form);
+
+                // 遍歷每個問題，計算正確答案
+                for (let [question, answer] of Object.entries(answers)) {
+                    if (formData.get(question) === answer) {
+                        score++;
+                    }
+                }
+
+                // 顯示結果，淡出再淡入
+                const resultDiv = $('#result');
+                resultDiv.fadeOut(200, function() {
+                    resultDiv.text(`你答對了 ${score} 題！`).fadeIn(200); // 更新結果文本並淡入
+                });
+            });
+        });
     </script>
 </body>
 </html>
