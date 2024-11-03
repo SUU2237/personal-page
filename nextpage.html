@@ -53,6 +53,7 @@
             width: 80%;
             max-width: 400px;
             border-radius: 5px;
+            text-align: center; /* 置中對齊 */
         }
         h1 {
             opacity: 0; /* 初始隱藏 */
@@ -112,7 +113,7 @@
     <!-- 彈出視窗 -->
     <div id="myModal" class="modal">
         <div class="modal-content">
-            <span class="close">&times;</span>
+            <span class="close" style="cursor:pointer; float:right; font-size:20px;">&times;</span>
             <h2>測驗結果</h2>
             <p id="modalResult"></p>
         </div>
