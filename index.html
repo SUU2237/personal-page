@@ -3,44 +3,116 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>412570015</title>
+    <title>HANGYODON!</title>
+    <h1>來自海底世界的❓❗</h1>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
+        .modal {
+            display: none; /* 初始隱藏 */
+            position: fixed; /* 固定位置 */
+            z-index: 1; /* 保證位於頂層 */
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* 半透明背景 */
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto; /* 中心對齊 */
+            padding: 20px;
+            width: 80%;
+            max-width: 400px;
+            border-radius: 5px;
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
         body {
-        background-color: #c2e0e7;
-        color: #333;
-        <!-- font-family: Arial, sans-serif; -->
-        } 
+            background-color: #c2e0e7;
+            color: #333;
+            font-family: Arial, sans-serif;
+        }
+        .button {
+            padding: 10px 20px;
+            background-color: #93cad0;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            outline: none;
+            border: none;
+            border-radius: 4px;
+            margin-right: 10px;
+            transition: background-color 0.3s; /* 加入背景顏色變化過渡 */
+        }
+        .button:hover {
+            background-color: #7cb1b8;
+        }
     </style>
 </head>
 <body>
-    <h1>Welcome to My GitHub Page</h1>
-    <p>This is my GitHub Pages website with jQuery functionality!</p>
-    
-    <!-- 添加互動元素 -->
-    <button id="toggleButton">Toggle Content</button>
-    <div id="content" style="display: none;">
-        <p>This is some hidden content that can be toggled.</p>
-    </div>
+    <p>相信不少人都曾看過這隻可愛生物，但你知道他叫什麽嗎？又是什麽生物呢？</p>
+    <img src="https://uc.udn.com.tw/photo/2024/03/14/0/29192883.jpg" alt="我是誰">
+    <br>
+    <button id="openModalBtn" class="button">解答&簡介</button>
 
-    <button id="slideButton">Slide Content</button>
-    <div id="slideContent" style="display: none;">
-        <p>This content slides up and down with animation!</p>
+    <!-- 彈出視窗 -->
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>人魚漢頓！</h2>
+            <a href="https://www.sanrio.com.tw/wp-content/uploads/2018/09/25.%E6%98%8E%E6%98%9F%E4%BB%8B%E7%B4%B9HG-01.png" target="_blank" class="button">點我看簡介</a>
+        </div>
     </div>
-
     
+    <button id="next" class="button">我已經知道了，直接進測驗！</button>
 
     <script>
-        // jQuery 功能
         $(document).ready(function() {
-            // 功能1：點擊顯示/隱藏內容
-            $('#toggleButton').click(function() {
-                $('#content').toggle(); // 切換顯示/隱藏
+            // 功能 1：淡入淡出彈窗
+            $('#openModalBtn').click(function() {
+                $('#myModal').fadeIn(); // 用淡入效果顯示彈窗
             });
 
-            // 功能2：滑動動畫效果
-            $('#slideButton').click(function() {
-                $('#slideContent').slideToggle(); // 切換滑動效果顯示/隱藏
+            // 點擊關閉按鈕，淡出隱藏彈窗
+            $('.close').click(function() {
+                $('#myModal').fadeOut(); // 用淡出效果關閉彈窗
+            });
+
+            // 點擊彈窗外部區域，淡出隱藏彈窗
+            $(window).click(function(event) {
+                if ($(event.target).is('#myModal')) {
+                    $('#myModal').fadeOut();
+                }
+            });
+
+            // 功能 2：按鈕簡單動畫效果
+            $('#next').hover(
+                function() {
+                    $(this).animate({ padding: '15px 25px' }, 200); // 放大效果
+                },
+                function() {
+                    $(this).animate({ padding: '10px 20px' }, 200); // 還原效果
+                }
+            );
+
+            // 功能 3：平滑跳轉效果
+            $('#next').click(function(event) {
+                event.preventDefault();
+                $('body').fadeOut(500, function() {
+                    window.location.replace("nextpage.html"); // 跳轉到下一頁
+                });
             });
         });
     </script>
