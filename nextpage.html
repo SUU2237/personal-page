@@ -7,34 +7,69 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
         body {
-            background-color: #c2e0e7;
+            background-color: #f0f8ff; /* 淡藍色背景 */
             color: #333;
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            color: #2b7a7d; /* 標題顏色 */
+            transition: opacity 1s;
+            opacity: 0; /* 初始隱藏 */
+        }
+
+        .quiz-container {
+            background-color: #ffffff; /* 白色容器背景 */
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* 陰影效果 */
+            padding: 20px;
+            width: 100%;
+            max-width: 600px; /* 最大寬度 */
+            margin: auto;
+        }
+
         .question {
             margin-bottom: 20px;
+            border-bottom: 1px solid #e0e0e0; /* 問題底部邊框 */
+            padding-bottom: 15px;
         }
-        .result {
-            margin-top: 20px;
-            font-weight: bold;
-            display: none; /* 初始隱藏 */
+
+        .question p {
+            font-size: 1.2em; /* 問題字體大小 */
+            margin: 0;
+            color: #4a4a4a; /* 問題文字顏色 */
         }
+
+        input[type="radio"] {
+            margin-right: 10px; /* 調整選項間距 */
+        }
+
         .button {
-            padding: 10px 20px;
-            background-color: #93cad0;
+            padding: 12px 25px;
+            background-color: #2b7a7d;
             color: white;
             text-align: center;
             text-decoration: none;
             display: inline-block;
-            outline: none;
             border: none;
-            border-radius: 4px;
+            border-radius: 5px;
             cursor: pointer;
-            transition: transform 0.2s; /* 加入動畫效果 */
+            transition: background-color 0.3s, transform 0.2s; /* 加入動畫效果 */
+            font-size: 1em; /* 調整字體大小 */
         }
+
         .button:hover {
+            background-color: #1b5c5f; /* 懸停時改變顏色 */
             transform: scale(1.05); /* 懸停時放大 */
         }
+
         /* 彈出視窗樣式 */
         .modal {
             display: none; /* 初始隱藏 */
@@ -46,74 +81,93 @@
             height: 100%;
             background-color: rgba(0, 0, 0, 0.5); /* 半透明背景 */
         }
+
         .modal-content {
-            background-color: #fefefe;
+            background-color: #ffffff;
             margin: 15% auto; /* 中心對齊 */
             padding: 20px;
             width: 80%;
             max-width: 400px;
-            border-radius: 5px;
+            border-radius: 10px;
             text-align: center; /* 置中對齊 */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* 陰影效果 */
         }
-        h1 {
-            opacity: 0; /* 初始隱藏 */
-            transition: opacity 1s; /* 加入淡入效果 */
+
+        .modal-content h2 {
+            margin: 0 0 15px; /* 標題底部邊距 */
+            color: #2b7a7d; /* 標題顏色 */
+        }
+
+        .modal-content p {
+            font-size: 1.2em; /* 結果字體大小 */
+            color: #4a4a4a; /* 結果文字顏色 */
+        }
+
+        .close {
+            cursor: pointer;
+            float: right;
+            font-size: 20px;
+            color: #999; /* 關閉按鈕顏色 */
+        }
+
+        .close:hover {
+            color: #2b7a7d; /* 懸停顏色 */
         }
     </style>
 </head>
 <body>
     <h1 id="quizTitle">漢頓小測驗！</h1>
 
-    <form id="quizForm">
-        <!-- 問題 1 -->
-        <div class="question">
-            <p>1. 漢頓是什麽生物？</p>
-            <input type="radio" name="q1" value="A"> 河童<br>
-            <input type="radio" name="q1" value="B"> 厚唇魚<br>
-            <input type="radio" name="q1" value="C"> 半人魚
-        </div>
+    <div class="quiz-container">
+        <form id="quizForm">
+            <!-- 問題 1 -->
+            <div class="question">
+                <p>1. 漢頓是什麽生物？</p>
+                <input type="radio" name="q1" value="A"> 河童<br>
+                <input type="radio" name="q1" value="B"> 厚唇魚<br>
+                <input type="radio" name="q1" value="C"> 半人魚
+            </div>
 
-        <!-- 問題 2 -->
-        <div class="question">
-            <p>2. 漢頓的生日是？</p>
-            <input type="radio" name="q2" value="A"> 3/12<br>
-            <input type="radio" name="q2" value="B"> 3/13<br>
-            <input type="radio" name="q2" value="C"> 3/14
-        </div>
+            <!-- 問題 2 -->
+            <div class="question">
+                <p>2. 漢頓的生日是？</p>
+                <input type="radio" name="q2" value="A"> 3/12<br>
+                <input type="radio" name="q2" value="B"> 3/13<br>
+                <input type="radio" name="q2" value="C"> 3/14
+            </div>
 
-        <!-- 問題 3 -->
-        <div class="question">
-            <p>3. 漢頓的專長是？</p>
-            <input type="radio" name="q3" value="A"> 擅長逗人發笑<br>
-            <input type="radio" name="q3" value="B"> 游泳<br>
-            <input type="radio" name="q3" value="C"> coding
-        </div>
+            <!-- 問題 3 -->
+            <div class="question">
+                <p>3. 漢頓的專長是？</p>
+                <input type="radio" name="q3" value="A"> 擅長逗人發笑<br>
+                <input type="radio" name="q3" value="B"> 游泳<br>
+                <input type="radio" name="q3" value="C"> coding
+            </div>
 
-        <!-- 問題 4 -->
-        <div class="question">
-            <p>4. 以下何者<strong>不是</strong>漢頓喜歡的食物？</p>
-            <input type="radio" name="q4" value="A"> 蝦味仙貝<br>
-            <input type="radio" name="q4" value="B"> 章魚<br>
-            <input type="radio" name="q4" value="C"> 涼麵
-        </div>
+            <!-- 問題 4 -->
+            <div class="question">
+                <p>4. 以下何者<strong>不是</strong>漢頓喜歡的食物？</p>
+                <input type="radio" name="q4" value="A"> 蝦味仙貝<br>
+                <input type="radio" name="q4" value="B"> 章魚<br>
+                <input type="radio" name="q4" value="C"> 涼麵
+            </div>
 
-        <!-- 問題 5 -->
-        <div class="question">
-            <p>5. 漢頓是由哪家公司創造出的？</p>
-            <input type="radio" name="q5" value="A"> San-X<br>
-            <input type="radio" name="q5" value="B"> Sanrio<br>
-            <input type="radio" name="q5" value="C"> BANDAI
-        </div>
+            <!-- 問題 5 -->
+            <div class="question">
+                <p>5. 漢頓是由哪家公司創造出的？</p>
+                <input type="radio" name="q5" value="A"> San-X<br>
+                <input type="radio" name="q5" value="B"> Sanrio<br>
+                <input type="radio" name="q5" value="C"> BANDAI
+            </div>
 
-        <button type="button" class="button" id="submitBtn">提交測驗</button>
-    </form>
-
-    <div class="result" id="result"></div>
+            <button type="button" class="button" id="submitBtn">提交測驗</button>
+        </form>
+    </div>
 
     <!-- 彈出視窗 -->
     <div id="myModal" class="modal">
         <div class="modal-content">
-            <span class="close" style="cursor:pointer; float:right; font-size:20px;">&times;</span>
+            <span class="close">&times;</span>
             <h2>測驗結果</h2>
             <p id="modalResult"></p>
         </div>
