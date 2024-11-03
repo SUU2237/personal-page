@@ -35,10 +35,33 @@
         .button:hover {
             transform: scale(1.05); /* 懸停時放大 */
         }
+        /* 彈出視窗樣式 */
+        .modal {
+            display: none; /* 初始隱藏 */
+            position: fixed; /* 固定位置 */
+            z-index: 1; /* 確保位於頂層 */
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* 半透明背景 */
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto; /* 中心對齊 */
+            padding: 20px;
+            width: 80%;
+            max-width: 400px;
+            border-radius: 5px;
+        }
+        h1 {
+            opacity: 0; /* 初始隱藏 */
+            transition: opacity 1s; /* 加入淡入效果 */
+        }
     </style>
 </head>
 <body>
-    <h1>漢頓小測驗！</h1>
+    <h1 id="quizTitle">漢頓小測驗！</h1>
 
     <form id="quizForm">
         <!-- 問題 1 -->
@@ -86,6 +109,15 @@
 
     <div class="result" id="result"></div>
 
+    <!-- 彈出視窗 -->
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>測驗結果</h2>
+            <p id="modalResult"></p>
+        </div>
+    </div>
+
     <script>
         // 正確答案列表
         const answers = {
@@ -97,6 +129,9 @@
         };
 
         $(document).ready(function() {
+            // 為標題添加淡入效果
+            $('#quizTitle').css('opacity', 1);
+
             $('#submitBtn').click(function() {
                 // 驗證所有問題是否都已選擇
                 let allAnswered = true;
@@ -124,11 +159,21 @@
                     }
                 }
 
-                // 顯示結果，淡出再淡入
-                const resultDiv = $('#result');
-                resultDiv.fadeOut(200, function() {
-                    resultDiv.text(`你答對了 ${score} 題！`).fadeIn(200); // 更新結果文本並淡入
-                });
+                // 在彈出視窗中顯示結果
+                $('#modalResult').text(`你答對了 ${score} 題！`);
+                $('#myModal').fadeIn(); // 顯示彈出視窗
+            });
+
+            // 點擊關閉按鈕，淡出隱藏彈窗
+            $(document).on('click', '.close', function() {
+                $('#myModal').fadeOut(); // 隱藏彈出視窗
+            });
+
+            // 點擊彈窗外部區域，淡出隱藏彈窗
+            $(window).click(function(event) {
+                if ($(event.target).is('#myModal')) {
+                    $('#myModal').fadeOut();
+                }
             });
         });
     </script>
